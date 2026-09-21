@@ -1,0 +1,1186 @@
+<title>Crabby Larry</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Fredoka:wght@500;600;700&display=swap">
+<style>
+  :root{
+    --sand:#F6EFDE; --paper:#FFFCF5; --ink:#17323A; --ink-soft:#4E6870;
+    --fairway:#2F7A54; --fairway-deep:#1F5A3D; --fairway-tint:#E4F1E9;
+    --buoy:#D2483A; --buoy-deep:#A8352A; --buoy-tint:#F8E0D9;
+    --lagoon:#2E88A6; --lagoon-deep:#1F6883; --lagoon-tint:#DEEEF2;
+    --line:#E3D8BE; --line-soft:#EFE7D2;
+    --mascot-shell:#3E77A8; --mascot-shell-deep:#1D4763; --mascot-red:#C0392B;
+    --shadow-color:23,50,58;
+    --shadow-sm:0 1px 2px rgba(var(--shadow-color),.10);
+    --shadow-md:0 10px 28px rgba(var(--shadow-color),.14);
+    --shadow-lg:0 22px 48px rgba(var(--shadow-color),.20);
+    --r-sm:10px; --r-md:16px; --r-lg:26px; --r-pill:999px;
+    --display:'Fraunces',Georgia,'Times New Roman',serif;
+    --body:'Figtree',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    --brand:'Fredoka','Figtree',-apple-system,sans-serif;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --sand:#0F262C; --paper:#153037; --ink:#F1ECDB; --ink-soft:#9FB7BC;
+      --fairway:#4FB985; --fairway-deep:#7BD6A6; --fairway-tint:#1C3B30;
+      --buoy:#E07162; --buoy-deep:#F09484; --buoy-tint:#3A241E;
+      --lagoon:#5FC4E6; --lagoon-deep:#8ADAF2; --lagoon-tint:#123340;
+      --line:#264A50; --line-soft:#1D3B41;
+      --mascot-shell:#6FA9D8; --mascot-shell-deep:#2C6690; --mascot-red:#E8695A;
+      --shadow-color:0,0,0;
+    }
+  }
+  :root[data-theme="dark"]{
+    --sand:#0F262C; --paper:#153037; --ink:#F1ECDB; --ink-soft:#9FB7BC;
+    --fairway:#4FB985; --fairway-deep:#7BD6A6; --fairway-tint:#1C3B30;
+    --buoy:#E07162; --buoy-deep:#F09484; --buoy-tint:#3A241E;
+    --lagoon:#5FC4E6; --lagoon-deep:#8ADAF2; --lagoon-tint:#123340;
+    --line:#264A50; --line-soft:#1D3B41;
+    --mascot-shell:#6FA9D8; --mascot-shell-deep:#2C6690; --mascot-red:#E8695A;
+    --shadow-color:0,0,0;
+  }
+
+  *{box-sizing:border-box;}
+  body{background:var(--sand); color:var(--ink); font-family:var(--body); line-height:1.5; -webkit-font-smoothing:antialiased;}
+  h1,h2,h3,h4{font-family:var(--display); font-weight:600; line-height:1.12; margin:0; text-wrap:balance; color:var(--ink);}
+  p{margin:0;}
+  a{color:inherit;}
+  button{font-family:var(--body); cursor:pointer;}
+  ::selection{background:var(--buoy-tint); color:var(--buoy-deep);}
+  :focus-visible{outline:2px solid var(--lagoon); outline-offset:2px; border-radius:4px;}
+  @media (prefers-reduced-motion: reduce){ *{animation-duration:.001ms !important; transition-duration:.001ms !important;} }
+
+  .container{max-width:1180px; margin:0 auto; padding-inline:20px;}
+  @media (min-width:640px){ .container{padding-inline:32px;} }
+
+  /* ---------- Buttons & chips ---------- */
+  .btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; font-family:var(--brand); font-weight:600; font-size:.95rem; border-radius:var(--r-pill); border:1.5px solid transparent; padding:.8em 1.5em; transition:transform .15s ease, box-shadow .15s ease, background-color .15s ease; white-space:nowrap;}
+  .btn:active{transform:scale(.97);}
+  .btn-primary{background:var(--fairway); color:#FBF9F0; box-shadow:var(--shadow-sm);}
+  .btn-primary:hover{background:var(--fairway-deep); box-shadow:var(--shadow-md);}
+  .btn-accent{background:var(--buoy); color:#FFF9F3;}
+  .btn-accent:hover{background:var(--buoy-deep);}
+  .btn-ghost{background:transparent; border-color:var(--line); color:var(--ink);}
+  .btn-ghost:hover{border-color:var(--fairway); color:var(--fairway-deep);}
+  .btn-block{width:100%;}
+  .btn-sm{padding:.55em 1.1em; font-size:.85rem;}
+  .btn[disabled]{opacity:.5; cursor:not-allowed; transform:none;}
+  .btn svg{width:1.1em; height:1.1em; flex:none;}
+
+  .pill{display:inline-flex; align-items:center; gap:6px; font-family:var(--body); font-weight:700; font-size:.74rem; letter-spacing:.08em; text-transform:uppercase; padding:.4em .9em; border-radius:var(--r-pill); background:var(--lagoon-tint); color:var(--lagoon-deep);}
+  .rating{display:flex; align-items:center; gap:5px; margin-top:2px;}
+  .rating .stars{display:inline-flex; gap:1px; color:var(--buoy);}
+  .rating .stars svg{width:12px; height:12px;}
+  .rating .stars svg.empty{color:var(--line);}
+  .rating .count{font-size:.74rem; color:var(--ink-soft); font-weight:600;}
+  .brand-tag{font-size:.68rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--mascot-shell-deep); background:var(--fairway-tint); display:inline-block; padding:.2em .6em; border-radius:var(--r-pill); margin-bottom:4px; width:fit-content;}
+  .size-opt[disabled]{opacity:.4; text-decoration:line-through; cursor:not-allowed;}
+
+  .chip{font-family:var(--brand); font-weight:600; font-size:.85rem; padding:.55em 1.1em; border-radius:var(--r-pill); border:1.5px solid var(--line); background:var(--paper); color:var(--ink-soft); transition:.15s ease;}
+  .chip[aria-pressed="true"]{background:var(--fairway); border-color:var(--fairway); color:#FBF9F0;}
+  .chip:hover:not([aria-pressed="true"]){border-color:var(--fairway);}
+
+  /* ---------- Nav ---------- */
+  .promo-bar{background:var(--mascot-shell-deep); color:#F3F8FB; text-align:center; font-family:var(--body); font-weight:600; font-size:.78rem; letter-spacing:.05em; text-transform:uppercase; padding:.55em 1em; padding-top:calc(.55em + env(safe-area-inset-top,0px));}
+  .site-nav{position:sticky; top:env(safe-area-inset-top,0px); z-index:40; background:color-mix(in srgb, var(--sand) 92%, transparent); backdrop-filter:blur(10px); border-bottom:1px solid var(--line-soft);}
+  .site-nav .row{display:flex; align-items:center; justify-content:space-between; gap:16px; padding-block:14px;}
+  .brand{display:flex; align-items:center; gap:10px; font-family:var(--brand); font-weight:700; font-size:1.25rem; color:var(--ink); flex:none; letter-spacing:.01em;}
+  .brand .mark{width:38px; height:38px; flex:none;}
+  .nav-links{display:none; align-items:center; gap:4px; list-style:none; margin:0; padding:0;}
+  .nav-links a{display:block; padding:.55em 1em; border-radius:var(--r-pill); font-weight:700; font-size:.78rem; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); transition:.15s ease;}
+  .nav-links a:hover{color:var(--ink); background:var(--line-soft);}
+  .nav-links a.active{color:var(--fairway-deep); background:var(--fairway-tint);}
+  @media (min-width:860px){ .nav-links{display:flex;} }
+  .nav-actions{display:flex; align-items:center; gap:8px;}
+  .icon-btn{position:relative; display:inline-flex; align-items:center; justify-content:center; width:42px; height:42px; border-radius:50%; border:1.5px solid var(--line); background:var(--paper); color:var(--ink); flex:none; transition:.15s ease;}
+  .icon-btn:hover{border-color:var(--fairway); color:var(--fairway-deep);}
+  .icon-btn svg{width:20px; height:20px;}
+  .cart-badge{position:absolute; top:-4px; right:-4px; min-width:19px; height:19px; padding:0 4px; border-radius:999px; background:var(--buoy); color:#fff; font-family:var(--brand); font-size:.68rem; font-weight:700; display:flex; align-items:center; justify-content:center; border:2px solid var(--sand);}
+  .menu-toggle{display:inline-flex; }
+  @media (min-width:860px){ .menu-toggle{display:none;} }
+  .mobile-menu{display:none; flex-direction:column; gap:2px; padding:8px 0 16px;}
+  .mobile-menu.open{display:flex;}
+  .mobile-menu a{padding:.7em 1em; border-radius:var(--r-md); font-weight:700; font-size:.85rem; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-soft);}
+  .mobile-menu a.active{color:var(--fairway-deep); background:var(--fairway-tint);}
+
+  /* ---------- Hero ---------- */
+  .hero{padding-block:52px 0;}
+  .hero .grid{display:grid; gap:40px; align-items:center;}
+  @media (min-width:900px){ .hero .grid{grid-template-columns:1.05fr .95fr; gap:24px;} }
+  .hero h1{font-size:clamp(2.1rem, 5vw, 3.4rem); letter-spacing:-.01em;}
+  .hero h1 em{font-style:italic; color:var(--buoy);}
+  .hero p.lede{margin-top:16px; font-size:1.08rem; color:var(--ink-soft); max-width:46ch;}
+  .hero .cta-row{display:flex; flex-wrap:wrap; gap:12px; margin-top:26px;}
+  .stat-row{display:flex; flex-wrap:wrap; gap:10px 22px; margin-top:32px;}
+  .stat-row .stat{display:flex; align-items:center; gap:8px; font-size:.85rem; color:var(--ink-soft); font-weight:500;}
+  .stat-row svg{width:18px; height:18px; color:var(--fairway); flex:none;}
+  .hero-art{position:relative; display:flex; justify-content:center;}
+  .hero-art svg{width:min(100%,380px); height:auto;}
+  .wave-divider{display:block; width:100%; height:56px; margin-top:48px;}
+  .wave-divider path{fill:var(--paper);}
+
+  /* ---------- Section shell ---------- */
+  section[data-view]{padding-bottom:64px;}
+  .section-pad{background:var(--paper);}
+  .section-head{max-width:640px; margin-bottom:32px;}
+  .section-head .pill{margin-bottom:14px;}
+  .section-head h2{font-size:clamp(1.6rem,3.4vw,2.2rem);}
+  .section-head h2.upper{font-family:var(--body); text-transform:uppercase; font-weight:800; letter-spacing:.01em;}
+  .section-head p{margin-top:10px; color:var(--ink-soft);}
+
+  /* ---------- Category strip ---------- */
+  .cat-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:14px;}
+  @media (min-width:700px){ .cat-grid{grid-template-columns:repeat(3,1fr);} }
+  @media (min-width:980px){ .cat-grid{grid-template-columns:repeat(5,1fr);} }
+  .cat-card.collab{background:var(--mascot-shell-deep); border-color:var(--mascot-shell-deep);}
+  .cat-card.collab .ic{background:rgba(255,255,255,.14); color:#F3F8FB;}
+  .cat-card.collab b, .cat-card.collab span{color:#F3F8FB;}
+  .cat-card{display:flex; flex-direction:column; gap:10px; align-items:flex-start; padding:20px; border-radius:var(--r-lg); background:var(--paper); border:1px solid var(--line-soft); text-align:left; transition:.18s ease;}
+  .cat-card:hover{transform:translateY(-3px); box-shadow:var(--shadow-md); border-color:var(--fairway);}
+  .cat-card .ic{width:44px; height:44px; border-radius:var(--r-md); background:var(--fairway-tint); color:var(--fairway-deep); display:flex; align-items:center; justify-content:center;}
+  .cat-card .ic svg{width:24px; height:24px;}
+  .cat-card b{font-family:var(--brand); font-size:1rem;}
+  .cat-card span{font-size:.82rem; color:var(--ink-soft);}
+
+  /* ---------- Product grid & card ---------- */
+  .toolbar{display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between; margin-bottom:26px;}
+  .chip-row{display:flex; flex-wrap:wrap; gap:8px;}
+  select.sort{font-family:var(--body); font-weight:600; font-size:.85rem; padding:.6em 1em; border-radius:var(--r-pill); border:1.5px solid var(--line); background:var(--paper); color:var(--ink);}
+  .prod-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(228px,1fr)); gap:20px;}
+  .prod-card{display:flex; flex-direction:column; background:var(--paper); border:1px solid var(--line-soft); border-radius:var(--r-lg); overflow:hidden; transition:.18s ease; text-align:left;}
+  .prod-card:hover{box-shadow:var(--shadow-md); transform:translateY(-3px); border-color:var(--fairway);}
+  .prod-tile{position:relative; aspect-ratio:1/1; display:flex; align-items:center; justify-content:center; background:var(--tile-bg,var(--fairway-tint));}
+  .prod-tile svg{width:52%; height:52%; color:var(--tile-fg,var(--fairway-deep));}
+  .prod-tile .tag{position:absolute; top:10px; left:10px; background:var(--buoy); color:#fff; font-family:var(--body); font-size:.66rem; font-weight:800; letter-spacing:.05em; text-transform:uppercase; padding:.3em .7em; border-radius:var(--r-pill);}
+  .prod-body{padding:14px 16px 16px; display:flex; flex-direction:column; gap:6px; flex:1;}
+  .prod-cat{font-size:.72rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--lagoon-deep);}
+  .prod-name{font-family:var(--display); font-size:1.05rem; font-weight:600;}
+  .prod-price{font-family:var(--brand); font-weight:700; color:var(--buoy-deep); margin-top:2px;}
+  .swatch-row{display:flex; gap:5px; margin-top:4px;}
+  .swatch-dot{width:14px; height:14px; border-radius:50%; border:1.5px solid rgba(var(--shadow-color),.18);}
+  .prod-actions{margin-top:auto; padding-top:12px; display:flex; gap:8px;}
+
+  /* ---------- Brand band ---------- */
+  .band{background:var(--fairway-deep); color:#FBF9F0; padding-block:52px;}
+  .band .grid{display:grid; gap:28px; align-items:center;}
+  @media (min-width:840px){ .band .grid{grid-template-columns:.8fr 1.2fr;} }
+  .band h3{color:#FBF9F0; font-size:clamp(1.5rem,3vw,2rem);}
+  .band p{color:#DCEDE1; margin-top:12px; max-width:52ch;}
+  .band svg{width:min(100%,220px); height:auto;}
+
+  /* ---------- Value cards (about) ---------- */
+  .value-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:16px;}
+  @media (min-width:760px){ .value-grid{grid-template-columns:repeat(4,1fr);} }
+  .value-card{padding:20px; border-radius:var(--r-lg); background:var(--paper); border:1px solid var(--line-soft);}
+  .value-card .ic{width:38px; height:38px; border-radius:10px; background:var(--buoy-tint); color:var(--buoy-deep); display:flex; align-items:center; justify-content:center; margin-bottom:12px;}
+  .value-card .ic svg{width:20px; height:20px;}
+  .value-card h4{font-size:1rem; font-family:var(--brand);}
+  .value-card p{margin-top:6px; font-size:.85rem; color:var(--ink-soft);}
+
+  .story-grid{display:grid; gap:32px; align-items:start;}
+  @media (min-width:880px){ .story-grid{grid-template-columns:1fr 1fr;} }
+  .story-grid p+p{margin-top:14px;}
+  .story-grid .lede{font-family:var(--display); font-size:1.25rem; font-weight:500; color:var(--ink);}
+  .story-grid .body-copy p{color:var(--ink-soft);}
+  .story-art{display:flex; justify-content:center;}
+  .story-art svg{width:min(100%,300px);}
+
+  /* ---------- Contact / newsletter ---------- */
+  .form-field{display:flex; flex-direction:column; gap:6px;}
+  .form-field label{font-size:.82rem; font-weight:700; color:var(--ink-soft);}
+  .form-field input, .form-field textarea, .form-field select{font-family:var(--body); font-size:.95rem; padding:.75em .9em; border-radius:var(--r-sm); border:1.5px solid var(--line); background:var(--paper); color:var(--ink); width:100%;}
+  .form-field input:focus, .form-field textarea:focus, .form-field select:focus{border-color:var(--fairway);}
+  .form-grid{display:grid; gap:14px;}
+  @media (min-width:600px){ .form-grid.cols-2{grid-template-columns:1fr 1fr;} .form-grid.cols-3{grid-template-columns:1fr 1fr 1fr;} }
+  .contact-wrap{display:grid; gap:36px;}
+  @media (min-width:880px){ .contact-wrap{grid-template-columns:1fr .8fr;} }
+  .info-card{padding:22px; border-radius:var(--r-lg); background:var(--fairway-tint); border:1px solid var(--line-soft);}
+  .info-card h4{font-family:var(--brand); font-size:1rem; margin-bottom:6px;}
+  .info-card p{color:var(--ink-soft); font-size:.9rem;}
+  .social-row{display:flex; gap:8px; margin-top:16px;}
+
+  .newsletter{background:var(--fairway-tint); border-radius:var(--r-lg); padding:28px; display:flex; flex-direction:column; gap:14px;}
+  @media (min-width:700px){ .newsletter{flex-direction:row; align-items:center; justify-content:space-between; gap:24px;} }
+  .newsletter form{display:flex; gap:8px; width:100%; max-width:380px;}
+  .newsletter input{flex:1; padding:.75em 1em; border-radius:var(--r-pill); border:1.5px solid var(--line); background:var(--paper); font-family:var(--body);}
+
+  /* ---------- Footer ---------- */
+  footer{background:var(--paper); border-top:1px solid var(--line-soft); padding-top:44px;}
+  .foot-grid{display:grid; gap:28px; padding-bottom:28px;}
+  @media (min-width:720px){ .foot-grid{grid-template-columns:1.4fr 1fr 1fr;} }
+  .foot-grid h5{font-family:var(--brand); font-size:.82rem; letter-spacing:.04em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:10px;}
+  .foot-links{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px;}
+  .foot-links a{font-size:.92rem; color:var(--ink-soft);}
+  .foot-links a:hover{color:var(--fairway-deep);}
+  .foot-bottom{border-top:1px solid var(--line-soft); padding-block:18px; display:flex; flex-wrap:wrap; gap:8px; justify-content:space-between; font-size:.8rem; color:var(--ink-soft);}
+
+  /* ---------- Cart drawer ---------- */
+  .scrim{position:fixed; inset:0; background:rgba(15,32,36,.5); opacity:0; pointer-events:none; transition:opacity .2s ease; z-index:60;}
+  .scrim.open{opacity:1; pointer-events:auto;}
+  .drawer{position:fixed; top:0; right:0; bottom:0; width:min(420px,100%); background:var(--paper); box-shadow:var(--shadow-lg); z-index:61; display:flex; flex-direction:column; transform:translateX(100%); transition:transform .25s ease;}
+  .drawer.open{transform:translateX(0);}
+  .drawer-head{display:flex; align-items:center; justify-content:space-between; padding:18px 20px; border-bottom:1px solid var(--line-soft); padding-top:calc(18px + env(safe-area-inset-top,0px));}
+  .drawer-head h3{font-size:1.15rem;}
+  .drawer-body{flex:1; overflow-y:auto; padding:16px 20px;}
+  .drawer-foot{padding:16px 20px calc(18px + env(safe-area-inset-bottom,0px)); border-top:1px solid var(--line-soft); display:flex; flex-direction:column; gap:12px;}
+  .ship-progress{background:var(--fairway-tint); border-radius:var(--r-md); padding:12px 14px; font-size:.82rem; color:var(--fairway-deep); margin-bottom:14px;}
+  .ship-progress .bar{height:6px; border-radius:99px; background:var(--line-soft); margin-top:8px; overflow:hidden;}
+  .ship-progress .bar i{display:block; height:100%; background:var(--fairway); border-radius:99px; transition:width .3s ease;}
+  .cart-line{display:flex; gap:12px; padding:12px 0; border-bottom:1px solid var(--line-soft);}
+  .cart-line .thumb{width:60px; height:60px; border-radius:var(--r-sm); background:var(--fairway-tint); display:flex; align-items:center; justify-content:center; flex:none;}
+  .cart-line .thumb svg{width:60%; height:60%; color:var(--fairway-deep);}
+  .cart-line .info{flex:1; min-width:0;}
+  .cart-line .info .nm{font-weight:600; font-size:.92rem;}
+  .cart-line .info .vr{font-size:.78rem; color:var(--ink-soft); margin-top:2px;}
+  .qty-stepper{display:inline-flex; align-items:center; border:1.5px solid var(--line); border-radius:var(--r-pill); margin-top:8px;}
+  .qty-stepper button{width:26px; height:26px; display:flex; align-items:center; justify-content:center; background:none; border:none; color:var(--ink); border-radius:50%;}
+  .qty-stepper button:hover{background:var(--line-soft);}
+  .qty-stepper span{min-width:22px; text-align:center; font-size:.85rem; font-weight:600;}
+  .cart-line .right{display:flex; flex-direction:column; align-items:flex-end; gap:8px; flex:none;}
+  .cart-line .line-total{font-weight:700; font-size:.9rem; font-family:var(--brand);}
+  .rm-btn{color:var(--ink-soft); background:none; border:none; padding:2px;}
+  .rm-btn:hover{color:var(--buoy);}
+  .rm-btn svg{width:16px; height:16px;}
+  .drawer-empty{display:flex; flex-direction:column; align-items:center; text-align:center; gap:14px; padding:48px 12px;}
+  .drawer-empty svg{width:96px; height:96px;}
+  .drawer-empty p{color:var(--ink-soft); font-size:.92rem; max-width:26ch;}
+  .cart-subtotal-row{display:flex; justify-content:space-between; font-family:var(--brand); font-weight:700; font-size:1.05rem;}
+
+  /* ---------- Quick view modal ---------- */
+  .modal-wrap{position:fixed; inset:0; z-index:62; background:rgba(15,32,36,.5); display:flex; align-items:flex-end; justify-content:center; opacity:0; pointer-events:none; transition:opacity .2s ease;}
+  .modal-wrap.open{opacity:1; pointer-events:auto;}
+  @media (min-width:720px){ .modal-wrap{align-items:center;} }
+  .modal-card{position:relative; background:var(--paper); width:100%; max-width:760px; max-height:92vh; overflow-y:auto; border-radius:var(--r-lg) var(--r-lg) 0 0; box-shadow:var(--shadow-lg); transform:translateY(24px); transition:transform .25s ease;}
+  .modal-wrap.open .modal-card{transform:translateY(0);}
+  @media (min-width:720px){ .modal-card{border-radius:var(--r-lg);} }
+  .modal-close{position:absolute; top:14px; right:14px; z-index:2;}
+  .modal-grid{display:grid; gap:0;}
+  @media (min-width:640px){ .modal-grid{grid-template-columns:1fr 1fr;} }
+  .modal-art{aspect-ratio:1/1; display:flex; align-items:center; justify-content:center; background:var(--tile-bg,var(--fairway-tint));}
+  .modal-art svg{width:46%; height:46%; color:var(--tile-fg,var(--fairway-deep));}
+  .modal-info{padding:26px 24px 30px; display:flex; flex-direction:column; gap:14px;}
+  .modal-info h3{font-size:1.5rem;}
+  .modal-info .price{font-family:var(--brand); font-weight:700; color:var(--buoy-deep); font-size:1.15rem;}
+  .opt-label{font-size:.8rem; font-weight:700; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.04em; margin-bottom:8px;}
+  .color-row{display:flex; gap:8px; flex-wrap:wrap;}
+  .color-opt{width:34px; height:34px; border-radius:50%; border:2px solid transparent; position:relative; cursor:pointer;}
+  .color-opt[aria-pressed="true"]{border-color:var(--ink);}
+  .size-row{display:flex; gap:8px; flex-wrap:wrap;}
+  .size-opt{min-width:44px; padding:.5em .6em; text-align:center; border-radius:var(--r-sm); border:1.5px solid var(--line); font-size:.85rem; font-weight:600; background:var(--paper);}
+  .size-opt[aria-pressed="true"]{background:var(--ink); color:var(--paper); border-color:var(--ink);}
+  .modal-info .desc{color:var(--ink-soft); font-size:.92rem;}
+  .modal-add-row{display:flex; gap:10px; align-items:center; margin-top:4px;}
+
+  /* ---------- Checkout ---------- */
+  .checkout-grid{display:grid; gap:32px;}
+  @media (min-width:900px){ .checkout-grid{grid-template-columns:1.3fr .9fr;} }
+  .co-card{background:var(--paper); border:1px solid var(--line-soft); border-radius:var(--r-lg); padding:22px;}
+  .co-card + .co-card{margin-top:20px;}
+  .co-card h3{font-size:1.05rem; margin-bottom:16px;}
+  .radio-row{display:flex; flex-direction:column; gap:10px;}
+  .radio-opt{display:flex; align-items:center; justify-content:space-between; gap:10px; padding:12px 14px; border:1.5px solid var(--line); border-radius:var(--r-md); cursor:pointer;}
+  .radio-opt:has(input:checked){border-color:var(--fairway); background:var(--fairway-tint);}
+  .radio-opt .l{display:flex; align-items:center; gap:10px; font-weight:600; font-size:.92rem;}
+  .radio-opt .p{font-size:.85rem; color:var(--ink-soft); font-weight:600;}
+  .proto-note{font-size:.78rem; font-style:italic; color:var(--ink-soft); margin-top:12px;}
+  .summary-card{position:sticky; top:calc(80px + env(safe-area-inset-top,0px)); background:var(--paper); border:1px solid var(--line-soft); border-radius:var(--r-lg); padding:22px;}
+  .sum-line{display:flex; justify-content:space-between; font-size:.9rem; padding:8px 0; color:var(--ink-soft);}
+  .sum-line.total{border-top:1px solid var(--line-soft); margin-top:6px; padding-top:14px; font-family:var(--brand); font-weight:700; font-size:1.1rem; color:var(--ink);}
+  .mini-line{display:flex; gap:10px; padding:8px 0; align-items:center;}
+  .mini-line .thumb{width:42px; height:42px; border-radius:8px; background:var(--fairway-tint); display:flex; align-items:center; justify-content:center; flex:none;}
+  .mini-line .thumb svg{width:60%; height:60%; color:var(--fairway-deep);}
+  .mini-line .nm{font-size:.82rem; font-weight:600;}
+  .mini-line .vr{font-size:.74rem; color:var(--ink-soft);}
+  .mini-line .pr{margin-left:auto; font-size:.82rem; font-weight:700; font-family:var(--brand);}
+
+  /* ---------- Confirmation ---------- */
+  .confirm-wrap{max-width:560px; margin:0 auto; text-align:center; padding-block:36px;}
+  .confirm-wrap svg{width:96px; height:96px; margin-bottom:18px;}
+  .order-no{font-family:var(--brand); font-weight:700; color:var(--buoy-deep); font-size:1.2rem; margin-top:6px;}
+  .confirm-card{text-align:left; margin-top:28px;}
+
+  /* ---------- Toast ---------- */
+  .toast{position:fixed; left:50%; bottom:24px; transform:translate(-50%,12px); background:var(--ink); color:var(--sand); padding:.85em 1.3em; border-radius:var(--r-pill); font-size:.88rem; font-weight:600; box-shadow:var(--shadow-lg); z-index:80; opacity:0; pointer-events:none; transition:.22s ease;}
+  .toast.show{opacity:1; transform:translate(-50%,0);}
+
+  [hidden]{display:none !important;}
+  .visually-hidden{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap;}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <symbol id="ic-cart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.4" fill="currentColor" stroke="none"/><circle cx="18" cy="20" r="1.4" fill="currentColor" stroke="none"/><path d="M2.5 3h2.4l2.2 12.2a2 2 0 0 0 2 1.6h8.3a2 2 0 0 0 2-1.6L21 7H6"/></symbol>
+  <symbol id="ic-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></symbol>
+  <symbol id="ic-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l14 14M19 5L5 19"/></symbol>
+  <symbol id="ic-minus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></symbol>
+  <symbol id="ic-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="ic-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V4.8A.8.8 0 0 1 9.8 4h4.4a.8.8 0 0 1 .8.8V7M6 7l1 13a1.5 1.5 0 0 0 1.5 1.4h7A1.5 1.5 0 0 0 17 20L18 7"/></symbol>
+  <symbol id="ic-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c9 0 14-5 14-14C10 5 5 10 5 19Z"/><path d="M5 19c2-6 5-9 10-11"/></symbol>
+  <symbol id="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.4M12 19v2.4M4.6 4.6l1.7 1.7M17.7 17.7l1.7 1.7M2.5 12h2.4M19 12h2.4M4.6 19.4l1.7-1.7M17.7 6.3l1.7-1.7"/></symbol>
+  <symbol id="ic-truck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6h11v10H2z"/><path d="M13 10h4l4 3.2V16h-8z"/><circle cx="6.5" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></symbol>
+  <symbol id="ic-check-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"/><path d="M8 12.3l2.6 2.6L16.2 9"/></symbol>
+  <symbol id="ic-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="ic-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4.5" width="19" height="15" rx="2.4"/><path d="M3.5 6l8.5 6.5L20.5 6"/></symbol>
+  <symbol id="ic-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.4 7-11.6A7 7 0 0 0 5 9.4C5 14.6 12 21 12 21Z"/><circle cx="12" cy="9.4" r="2.4"/></symbol>
+  <symbol id="ic-shirt" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 6l-9 5 3 6 4-2v25h18V15l4 2 3-6-9-5c-1.5 2-4 3-6 3s-4.5-1-6-3Z"/><circle cx="24" cy="10.5" r="2"/></symbol>
+  <symbol id="ic-cap" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 24a15 15 0 0 1 30 0"/><path d="M6 26.5c8 3 28 3 36 0"/><path d="M6 26.5l-2.5 2.5c6 3.6 34.5 3.6 40.5 0L42 26.5"/><circle cx="24" cy="15" r="1.6" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="ic-visor" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 22a16 16 0 0 1 32 0"/><path d="M5 24.5c9 3 29 3 38 0"/><path d="M14 22.5V16M24 22V14M34 22.5V16"/></symbol>
+  <symbol id="ic-bucket" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20a12 12 0 0 1 24 0"/><path d="M9 20h30l3 8H6Z"/><path d="M11 28l3 9h20l3-9"/></symbol>
+  <symbol id="ic-jacket" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6l-10 5 3 6 4-2v25h18V15l4 2 3-6-10-5c-1.5 2-3.5 3-5.5 3s-4.5-1-6.5-3Z"/><path d="M24 9v31"/></symbol>
+  <symbol id="ic-shell" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 6l-9 6 3 6 4-2.5v6c-4 1.6-7 5-7 12v6.5h32V33c0-7-3-10.4-7-12v-6l4 2.5 3-6-9-6c-1.5 2-4 3-6 3s-4.5-1-6-3Z"/></symbol>
+  <symbol id="ic-towel" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="6" width="30" height="36" rx="2"/><path d="M9 16h30M9 30h30"/></symbol>
+  <symbol id="ic-headcover" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M24 4c8 6 12 14 12 22a12 12 0 0 1-24 0c0-8 4-16 12-22Z"/><path d="M24 4v12"/></symbol>
+  <symbol id="ic-socks" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 5h13v20l7 9a5 5 0 0 1-4 8H21a6 6 0 0 1-6-6V5Z"/><path d="M18 15h13"/></symbol>
+  <symbol id="ic-hoodie" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8l-9 5 3 6 4-2v25h18V17l4 2 3-6-9-5c-1 2-3 3-6 3s-5-1-6-3Z"/><path d="M15 8a9 7 0 0 1 18 0"/><path d="M19 26h10v8H19z"/></symbol>
+  <symbol id="ic-sweatpants" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 6h20v10l3 26h-9l-4-20-4 20h-9l3-26Z"/><path d="M14 16h20"/></symbol>
+  <symbol id="ic-tote" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 16h28l-2 26H12Z"/><path d="M16 16v-3a8 8 0 0 1 16 0v3"/></symbol>
+  <symbol id="ic-notecard" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="10" width="34" height="26" rx="2"/><path d="M7 12l17 12 17-12"/></symbol>
+  <symbol id="ic-star" viewBox="0 0 20 20" fill="currentColor"><path d="M10 1.6l2.47 5.51 6.03.6-4.55 4.06 1.3 5.93L10 14.77l-5.25 2.93 1.3-5.93L1.5 7.7l6.03-.6Z"/></symbol>
+  <symbol id="larry-mascot" viewBox="0 0 220 190">
+    <path d="M40 130c-14-4-24-18-22-33 2-13 14-22 27-21" fill="none" stroke="var(--mascot-shell-deep)" stroke-width="7" stroke-linecap="round"/>
+    <path d="M180 130c14-4 24-18 22-33-2-13-14-22-27-21" fill="none" stroke="var(--mascot-shell-deep)" stroke-width="7" stroke-linecap="round"/>
+    <ellipse cx="24" cy="94" rx="17" ry="12" fill="var(--mascot-shell)" stroke="var(--mascot-shell-deep)" stroke-width="4" transform="rotate(-18 24 94)"/>
+    <ellipse cx="196" cy="94" rx="17" ry="12" fill="var(--mascot-shell)" stroke="var(--mascot-shell-deep)" stroke-width="4" transform="rotate(18 196 94)"/>
+    <ellipse cx="12" cy="88" rx="6.5" ry="5" fill="var(--mascot-red)" transform="rotate(-18 12 88)"/>
+    <ellipse cx="208" cy="88" rx="6.5" ry="5" fill="var(--mascot-red)" transform="rotate(18 208 88)"/>
+    <path d="M110 60c-38 0-64 22-64 55 0 30 27 50 64 50s64-20 64-50c0-33-26-55-64-55Z" fill="var(--mascot-shell)" stroke="var(--mascot-shell-deep)" stroke-width="5"/>
+    <path d="M70 88a90 40 0 0 1 80 0" fill="none" stroke="var(--mascot-shell-deep)" stroke-width="3" stroke-dasharray="2 8" stroke-linecap="round" opacity=".5"/>
+    <path d="M74 46c-4-14 2-27 10-30M146 46c4-14-2-27-10-30" fill="none" stroke="var(--mascot-shell-deep)" stroke-width="7" stroke-linecap="round"/>
+    <circle cx="80" cy="40" r="12" fill="#FFFCF5" stroke="var(--mascot-shell-deep)" stroke-width="4"/>
+    <circle cx="150" cy="40" r="12" fill="#FFFCF5" stroke="var(--mascot-shell-deep)" stroke-width="4"/>
+    <circle cx="82" cy="41" r="4.5" fill="var(--ink)"/>
+    <circle cx="152" cy="41" r="4.5" fill="var(--ink)"/>
+    <path d="M96 128q14 10 28 0" fill="none" stroke="var(--mascot-shell-deep)" stroke-width="5" stroke-linecap="round"/>
+    <path d="M46 150l-6 22M84 158l-3 24M136 158l3 24M174 150l6 22" fill="none" stroke="var(--mascot-shell-deep)" stroke-width="7" stroke-linecap="round"/>
+    <circle cx="40" cy="172" r="5" fill="var(--mascot-red)"/>
+    <circle cx="81" cy="182" r="5" fill="var(--mascot-red)"/>
+    <circle cx="139" cy="182" r="5" fill="var(--mascot-red)"/>
+    <circle cx="180" cy="172" r="5" fill="var(--mascot-red)"/>
+  </symbol>
+</defs>
+</svg>
+
+<div class="promo-bar">Free Shipping on Orders Over $75 &nbsp;&bull;&nbsp; A Little Crabitude, Delivered</div>
+<nav class="site-nav" aria-label="Primary">
+  <div class="container row">
+    <a href="#home" class="brand" data-link="home"><svg class="mark" viewBox="0 0 220 190" aria-hidden="true"><use href="#larry-mascot"/></svg><span style="color:var(--mascot-shell-deep)">Crabby</span>&nbsp;<span style="color:var(--mascot-red)">Larry</span></a>
+    <ul class="nav-links">
+      <li><a href="#home" data-link="home">Home</a></li>
+      <li><a href="#shop" data-link="shop">Shop</a></li>
+      <li><a href="#" data-cat-link="collab">Stitch Collab</a></li>
+      <li><a href="#about" data-link="about">About</a></li>
+      <li><a href="#contact" data-link="contact">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="icon-btn menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false"><svg><use href="#ic-menu"/></svg></button>
+      <button class="icon-btn" id="cartOpenBtn" aria-label="Open cart"><svg><use href="#ic-cart"/></svg><span class="cart-badge" id="cartBadge" hidden>0</span></button>
+    </div>
+  </div>
+  <div class="mobile-menu container" id="mobileMenu">
+    <a href="#home" data-link="home">Home</a>
+    <a href="#shop" data-link="shop">Shop</a>
+    <a href="#" data-cat-link="collab">Stitch Collab</a>
+    <a href="#about" data-link="about">About</a>
+    <a href="#contact" data-link="contact">Contact</a>
+  </div>
+</nav>
+
+<main>
+
+<!-- HOME -->
+<section data-view="home">
+  <div class="hero container">
+    <div class="grid">
+      <div>
+        <span class="pill"><svg width="14" height="14" style="width:14px;height:14px"><use href="#ic-leaf"/></svg>Coastal Fun, Reimagined</span>
+        <h1 style="margin-top:16px">Life's better with a little <em>Crabitude</em>.</h1>
+        <p class="lede">Crabby Larry is comfortable, coastal apparel for people who embrace their pinch of salt life personality — breezy headwear, cozy layers, and everyday gear for the boat, the beach, or the backyard.</p>
+        <div class="cta-row">
+          <button class="btn btn-primary" data-nav="shop">Shop the Collection <svg><use href="#ic-arrow"/></svg></button>
+          <button class="btn btn-ghost" data-nav="about">Meet Larry</button>
+        </div>
+        <div class="stat-row">
+          <span class="stat"><svg><use href="#ic-sun"/></svg>UPF 50+ headwear</span>
+          <span class="stat"><svg><use href="#ic-truck"/></svg>Free shipping over $75</span>
+          <span class="stat"><svg><use href="#ic-leaf"/></svg>Embroidered, not printed</span>
+        </div>
+      </div>
+      <div class="hero-art"><svg viewBox="0 0 220 190" aria-hidden="true"><use href="#larry-mascot"/></svg></div>
+    </div>
+  </div>
+  <svg class="wave-divider" viewBox="0 0 1200 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0 30 C 150 60 300 0 450 30 C 600 60 750 0 900 30 C 1050 60 1150 20 1200 30 L1200 60 L0 60 Z"/></svg>
+
+  <div class="section-pad">
+    <div class="container" style="padding-block:48px 8px">
+      <div class="section-head">
+        <span class="pill">Shop by category</span>
+        <h2>Four ways to wear your Crabitude</h2>
+      </div>
+      <div class="cat-grid">
+        <button class="cat-card" data-cat="headwear"><span class="ic"><svg><use href="#ic-cap"/></svg></span><b>Headwear</b><span>5 styles</span></button>
+        <button class="cat-card" data-cat="apparel"><span class="ic"><svg><use href="#ic-shirt"/></svg></span><b>Apparel</b><span>5 styles</span></button>
+        <button class="cat-card" data-cat="outerwear"><span class="ic"><svg><use href="#ic-hoodie"/></svg></span><b>Outerwear</b><span>5 styles</span></button>
+        <button class="cat-card" data-cat="accessories"><span class="ic"><svg><use href="#ic-tote"/></svg></span><b>Accessories</b><span>2 styles</span></button>
+        <button class="cat-card collab" data-cat="collab"><span class="ic"><svg><use href="#ic-shirt"/></svg></span><b>Stitch Collab</b><span>Concept &middot; 6 styles</span></button>
+      </div>
+    </div>
+
+    <div class="container" style="padding-block:48px">
+      <div class="section-head">
+        <span class="pill">Fan favorites</span>
+        <h2>What everyone's adding to cart</h2>
+      </div>
+      <div class="prod-grid" id="featuredGrid"></div>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="container grid">
+      <div class="story-art"><svg viewBox="0 0 220 190" aria-hidden="true"><use href="#larry-mascot"/></svg></div>
+      <div>
+        <h3>Born on the water, worn everywhere.</h3>
+        <p>Larry started as a doodle on a dock and grew into a full closet. Every piece is tested for humidity, salt spray, and the occasional spilled drink.</p>
+        <button class="btn btn-accent" style="margin-top:18px" data-nav="about">Read Larry's story <svg><use href="#ic-arrow"/></svg></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="band" style="background:var(--mascot-shell-deep)">
+    <div class="container grid">
+      <div class="story-art"><svg viewBox="0 0 48 48" style="width:min(100%,180px); color:#F3F8FB" aria-hidden="true"><use href="#ic-shirt"/></svg></div>
+      <div>
+        <span class="pill" style="background:rgba(255,255,255,.14); color:#F3F8FB">Proposed collaboration &middot; concept</span>
+        <h3 style="margin-top:14px">Crabby Larry &times; Stitch Golf.</h3>
+        <p>A proposed tie-in bringing Crabitude to the course: the Crabby Larry crab, custom-embroidered onto Stitch&rsquo;s moisture-wicking, antimicrobial polos through Stitch&rsquo;s own custom-logo program &mdash; the same kind of brand collaboration Stitch already builds for other partners.</p>
+        <button class="btn btn-accent" style="margin-top:18px" data-cat-link="collab">Preview the collab <svg><use href="#ic-arrow"/></svg></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container" style="padding-block:48px 0">
+    <div class="newsletter">
+      <div>
+        <h3 style="font-size:1.25rem">Get first dibs on new drops</h3>
+        <p style="color:var(--ink-soft); margin-top:4px; font-size:.9rem">One email a month. No spam, just tide charts and new gear.</p>
+      </div>
+      <form id="newsletterForm">
+        <label for="newsEmail" class="visually-hidden">Email address</label>
+        <input id="newsEmail" type="email" required placeholder="you@email.com">
+        <button class="btn btn-primary" type="submit">Sign up</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- SHOP -->
+<section data-view="shop" hidden>
+  <div class="container" style="padding-top:40px">
+    <div class="section-head">
+      <span class="pill">The full lineup</span>
+      <h2>Shop all gear</h2>
+      <p>17 styles across headwear, apparel, outerwear and accessories &mdash; plus 6 proposed Crabby Larry &times; Stitch Golf collab polos.</p>
+    </div>
+    <div class="toolbar">
+      <div class="chip-row" id="shopFilters"></div>
+      <select class="sort" id="shopSort">
+        <option value="featured">Sort: Featured</option>
+        <option value="price-asc">Price: Low to High</option>
+        <option value="price-desc">Price: High to Low</option>
+        <option value="name">Name: A&ndash;Z</option>
+      </select>
+    </div>
+    <p id="collabNote" class="proto-note" style="margin-bottom:16px" hidden>Concept only &mdash; a proposed Crabby Larry &times; Stitch Golf collaboration, not a confirmed partnership or available product.</p>
+    <div class="prod-grid" id="shopGrid"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section data-view="about" hidden>
+  <div class="container" style="padding-top:40px">
+    <div class="section-head">
+      <span class="pill">Our story</span>
+      <h2>Meet the claw behind the collection</h2>
+    </div>
+    <div class="story-grid">
+      <div class="story-art"><svg viewBox="0 0 220 190" aria-hidden="true"><use href="#larry-mascot"/></svg></div>
+      <div class="body-copy">
+        <p class="lede">Crabby Larry started as a nickname before it was a brand — comfortable, coastal fun apparel for people who embrace their pinch of salt life personality.</p>
+        <p>It grew from a hat, to a tee, to a whole closet's worth: caps, hoodies, tees and totes, each one carrying a little bit of Larry's temperament — a touch feisty, allergic to boring beige, always up for the next trip to the water.</p>
+        <p>He's molted a few shells getting here, but the mission hasn't changed — coastal life is supposed to be fun, and so is getting dressed for it.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:56px">
+      <div class="section-head"><h2>What we stand by</h2></div>
+      <div class="value-grid">
+        <div class="value-card"><span class="ic"><svg><use href="#ic-leaf"/></svg></span><h4>Coastal-grade craft</h4><p>Fabrics tested for salt, sun and humidity, not just a showroom.</p></div>
+        <div class="value-card"><span class="ic"><svg><use href="#ic-truck"/></svg></span><h4>Small-batch runs</h4><p>We drop in limited quantities so nothing sits in a warehouse.</p></div>
+        <div class="value-card"><span class="ic"><svg><use href="#ic-check-circle"/></svg></span><h4>Built to last</h4><p>Reinforced seams and stitching backed by a two-season guarantee.</p></div>
+        <div class="value-card"><span class="ic"><svg><use href="#ic-sun"/></svg></span><h4>Wear it anywhere</h4><p>From the boat to the backyard — Crabitude travels well.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section data-view="contact" hidden>
+  <div class="container" style="padding-top:40px">
+    <div class="section-head">
+      <span class="pill">Get in touch</span>
+      <h2>Questions, wholesale, or just say hi</h2>
+    </div>
+    <div class="contact-wrap">
+      <form id="contactForm">
+        <div class="form-grid cols-2">
+          <div class="form-field"><label for="cName">Name</label><input id="cName" required placeholder="Your name"></div>
+          <div class="form-field"><label for="cEmail">Email</label><input id="cEmail" type="email" required placeholder="you@email.com"></div>
+        </div>
+        <div class="form-field" style="margin-top:14px"><label for="cMsg">Message</label><textarea id="cMsg" rows="5" required placeholder="How can we help?"></textarea></div>
+        <button class="btn btn-primary" type="submit" style="margin-top:16px">Send message</button>
+      </form>
+      <div class="info-card">
+        <h4>Say hello</h4>
+        <p><svg width="14" height="14" style="display:inline;vertical-align:-2px;width:14px;height:14px"><use href="#ic-mail"/></svg> hello@crabbylarry.com</p>
+        <p style="margin-top:10px"><svg width="14" height="14" style="display:inline;vertical-align:-2px;width:14px;height:14px"><use href="#ic-pin"/></svg> Based on the coast. Shipped everywhere.</p>
+        <div class="social-row">
+          <span class="icon-btn" style="width:36px;height:36px" aria-hidden="true"><svg style="width:16px;height:16px"><use href="#ic-sun"/></svg></span>
+          <span class="icon-btn" style="width:36px;height:36px" aria-hidden="true"><svg style="width:16px;height:16px"><use href="#ic-leaf"/></svg></span>
+          <span class="icon-btn" style="width:36px;height:36px" aria-hidden="true"><svg style="width:16px;height:16px"><use href="#ic-mail"/></svg></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHECKOUT -->
+<section data-view="checkout" hidden>
+  <div class="container" style="padding-top:40px">
+    <div class="section-head">
+      <span class="pill">Almost there</span>
+      <h2>Checkout</h2>
+    </div>
+    <form id="checkoutForm" class="checkout-grid">
+      <div>
+        <div class="co-card">
+          <h3>Contact</h3>
+          <div class="form-grid cols-2">
+            <div class="form-field"><label for="coName">Full name</label><input id="coName" required placeholder="Jordan Fairway"></div>
+            <div class="form-field"><label for="coEmail">Email</label><input id="coEmail" type="email" required placeholder="you@email.com"></div>
+          </div>
+        </div>
+        <div class="co-card">
+          <h3>Shipping address</h3>
+          <div class="form-grid">
+            <div class="form-field"><label for="coAddr">Address</label><input id="coAddr" required placeholder="123 Fairway Lane"></div>
+          </div>
+          <div class="form-grid cols-3" style="margin-top:14px">
+            <div class="form-field"><label for="coCity">City</label><input id="coCity" required placeholder="Coral Bay"></div>
+            <div class="form-field"><label for="coState">State</label><input id="coState" required placeholder="FL"></div>
+            <div class="form-field"><label for="coZip">ZIP</label><input id="coZip" required placeholder="33100"></div>
+          </div>
+        </div>
+        <div class="co-card">
+          <h3>Shipping method</h3>
+          <div class="radio-row">
+            <label class="radio-opt"><span class="l"><input type="radio" name="shipMethod" value="standard" checked> Standard (5–7 days)</span><span class="p" id="stdShipLabel">Free</span></label>
+            <label class="radio-opt"><span class="l"><input type="radio" name="shipMethod" value="express"> Express (2–3 days)</span><span class="p">$14.99</span></label>
+          </div>
+        </div>
+        <div class="co-card">
+          <h3>Payment</h3>
+          <div class="radio-row">
+            <label class="radio-opt"><span class="l"><input type="radio" name="payMethod" value="card" checked> Credit card</span></label>
+            <label class="radio-opt"><span class="l"><input type="radio" name="payMethod" value="paypal"> PayPal</span></label>
+          </div>
+          <div class="form-grid cols-2" id="cardFields" style="margin-top:14px">
+            <div class="form-field" style="grid-column:1/-1"><label for="coCardName">Name on card</label><input id="coCardName" placeholder="Jordan Fairway"></div>
+            <div class="form-field" style="grid-column:1/-1"><label for="coCardNum">Card number</label><input id="coCardNum" placeholder="4242 4242 4242 4242"></div>
+            <div class="form-field"><label for="coExp">Expiry</label><input id="coExp" placeholder="MM/YY"></div>
+            <div class="form-field"><label for="coCvc">CVC</label><input id="coCvc" placeholder="123"></div>
+          </div>
+          <p class="proto-note">Prototype checkout for presentation purposes — no payment is transmitted or processed.</p>
+        </div>
+      </div>
+      <div>
+        <div class="summary-card">
+          <h3 style="margin-bottom:14px">Order summary</h3>
+          <div id="summaryLines"></div>
+          <div class="sum-line"><span>Subtotal</span><span id="sumSubtotal">$0.00</span></div>
+          <div class="sum-line"><span>Shipping</span><span id="sumShipping">$0.00</span></div>
+          <div class="sum-line"><span>Est. tax</span><span id="sumTax">$0.00</span></div>
+          <div class="sum-line total"><span>Total</span><span id="sumTotal">$0.00</span></div>
+          <button class="btn btn-primary btn-block" type="submit" style="margin-top:16px" id="placeOrderBtn">Place order</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- CONFIRMATION -->
+<section data-view="confirmation" hidden>
+  <div class="container">
+    <div class="confirm-wrap">
+      <svg viewBox="0 0 24 24" style="color:var(--fairway)"><use href="#ic-check-circle"/></svg>
+      <h2>Order confirmed!</h2>
+      <p style="margin-top:10px; color:var(--ink-soft)">Thanks for shopping Crabby Larry. A confirmation has been sent to <span id="confEmail">you</span>.</p>
+      <p class="order-no" id="confOrderNo"></p>
+      <p style="margin-top:6px; color:var(--ink-soft); font-size:.88rem" id="confEta"></p>
+      <div class="co-card confirm-card">
+        <h3 style="margin-bottom:14px">Order summary</h3>
+        <div id="confSummaryLines"></div>
+        <div class="sum-line total"><span>Total</span><span id="confTotal">$0.00</span></div>
+      </div>
+      <button class="btn btn-primary" style="margin-top:24px" data-nav="home">Continue shopping</button>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <svg class="wave-divider" style="margin-top:-44px; margin-bottom:12px" viewBox="0 0 1200 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0 30 C 150 0 300 60 450 30 C 600 0 750 60 900 30 C 1050 0 1150 40 1200 30 L1200 0 L0 0 Z" style="fill:var(--sand)"/></svg>
+  <div class="container">
+    <div class="foot-grid">
+      <div>
+        <div class="brand" style="margin-bottom:10px"><svg class="mark" viewBox="0 0 220 190" aria-hidden="true"><use href="#larry-mascot"/></svg><span style="color:var(--mascot-shell-deep)">Crabby</span>&nbsp;<span style="color:var(--mascot-red)">Larry</span></div>
+        <p style="color:var(--ink-soft); font-size:.88rem; max-width:34ch">Comfortable, coastal fun apparel with a pinch of Crabitude. Based on the coast, shipped everywhere.</p>
+      </div>
+      <div>
+        <h5>Shop</h5>
+        <ul class="foot-links">
+          <li><a href="#shop" data-link="shop">All products</a></li>
+          <li><a href="#" data-cat-link="headwear">Headwear</a></li>
+          <li><a href="#" data-cat-link="apparel">Apparel</a></li>
+          <li><a href="#" data-cat-link="outerwear">Outerwear</a></li>
+          <li><a href="#" data-cat-link="collab">Stitch Collab</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Company</h5>
+        <ul class="foot-links">
+          <li><a href="#about" data-link="about">About Larry</a></li>
+          <li><a href="#contact" data-link="contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span id="yearNow"></span> Crabby Larry. All rights reserved.</span>
+      <span>Concept design by Local Logic Management</span>
+    </div>
+  </div>
+</footer>
+
+<div class="scrim" id="scrim"></div>
+
+<aside class="drawer" id="cartDrawer" role="dialog" aria-modal="true" aria-label="Shopping cart">
+  <div class="drawer-head">
+    <h3>Your cart <span id="drawerCount" style="color:var(--ink-soft); font-weight:500; font-size:.9rem"></span></h3>
+    <button class="icon-btn" id="cartCloseBtn" aria-label="Close cart"><svg><use href="#ic-close"/></svg></button>
+  </div>
+  <div class="drawer-body" id="drawerBody"></div>
+  <div class="drawer-foot" id="drawerFoot" hidden>
+    <div class="ship-progress" id="shipProgress"></div>
+    <div class="cart-subtotal-row"><span>Subtotal</span><span id="cartSubtotal">$0.00</span></div>
+    <button class="btn btn-primary btn-block" id="checkoutBtn">Checkout <svg><use href="#ic-arrow"/></svg></button>
+    <button class="btn btn-ghost btn-block" id="continueShoppingBtn">Continue shopping</button>
+  </div>
+</aside>
+
+<div class="modal-wrap" id="quickView" role="dialog" aria-modal="true" aria-label="Product quick view">
+  <div class="modal-card">
+    <button class="icon-btn modal-close" id="modalCloseBtn" aria-label="Close"><svg><use href="#ic-close"/></svg></button>
+    <div class="modal-grid" id="modalGrid"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  var SWATCH = {
+    oxford:{hex:'#5B6B7C', label:'Two-Tone Oxford Blue & Grey'},
+    richblue:{hex:'#1E4E8C', label:'Rich Blue'},
+    neonblue:{hex:'#1E90FF', label:'Neon Blue'},
+    grey:{hex:'#9AA0A6', label:'Grey'},
+    white:{hex:'#F7F4EA', label:'White'},
+    navy:{hex:'#1F3A52', label:'Navy'},
+    breakerblue:{hex:'#2E7FB8', label:'Breaker Blue'},
+    lightblue:{hex:'#A9CDE8', label:'Light Blue'},
+    seafoam:{hex:'#8FD9C4', label:'Seafoam'},
+    coral:{hex:'#E8836F', label:'Coral'},
+    charcoal:{hex:'#3B3F42', label:'Charcoal'},
+    grape:{hex:'#6A4C93', label:'Grape'},
+    caribbean:{hex:'#2FB4C8', label:'Caribbean Blue'},
+    cranberry:{hex:'#8C2F39', label:'Cranberry'},
+    blueringblue:{hex:'#3E6FA8', label:'Blue Ring'},
+    rwb:{hex:'#B23A2E', label:'Red, White & Blue'},
+    crimson:{hex:'#B23A2E', label:'Crab Red'}
+  };
+
+  var CATS = {
+    headwear:{label:'Headwear', icon:'ic-cap'},
+    apparel:{label:'Apparel', icon:'ic-shirt'},
+    outerwear:{label:'Outerwear', icon:'ic-hoodie'},
+    accessories:{label:'Accessories', icon:'ic-tote'},
+    collab:{label:'Stitch Collab', icon:'ic-shirt'}
+  };
+
+  /* Crabby Larry's real, current product lineup (names/prices/colors reflect crabbylarry.com) */
+  var PRODUCTS = [
+    {id:'knitted-caps', name:'Crabby Larry Knitted Caps', category:'headwear', price:33, icon:'ic-cap', colors:['oxford','richblue','neonblue'], sizes:null, rating:4.9, reviews:41,
+      desc:'A ribbed knit cap with the crab embroidered up front — the one that comes out the second there’s a chill off the water.'},
+    {id:'imperial-visor', name:'Crabby Larry Moisture Wicking Imperial UPF 50+ Visor', category:'headwear', price:32, icon:'ic-visor', colors:['grey','white','navy'], sizes:null, featured:true, tag:'Bestseller', rating:4.8, reviews:67,
+      desc:'UPF 50+ coverage with a moisture-wicking sweatband, finished with the crab patch on the front panel. Built for long days on the water.'},
+    {id:'athletic-cap', name:'Crabby Larry Moisture Wicking UPF 50+ Athletic Cap', category:'headwear', price:33, icon:'ic-cap', colors:['breakerblue','white','lightblue'], sizes:null, featured:true, rating:4.8, reviews:54,
+      desc:'A performance six-panel cap with UPF 50+ protection and a moisture-wicking sweatband. Crabby Larry embroidered front and center.'},
+    {id:'crabby-caps', name:'Crabby Larry Caps', category:'headwear', price:30, icon:'ic-cap', colors:['seafoam','coral','charcoal','white','grape','caribbean','lightblue'], sizes:null, rating:4.7, reviews:38,
+      desc:'The everyday classic cap, embroidered with the crab, in seven colorways.'},
+    {id:'bucket-hats', name:'Crabby Larry Bucket Hats', category:'headwear', price:32, icon:'ic-bucket', colors:['seafoam','white'], sizes:null, rating:4.9, reviews:22,
+      desc:'A wide-brim packable bucket hat for full shade coverage, crab patch on the crown.'},
+    {id:'ls-tee', name:'Crabby Larry Unisex Long Sleeve T-shirts', category:'apparel', price:36, icon:'ic-shirt', colors:null, sizes:['S','M','L','XL','XXL'], rating:4.8, reviews:29,
+      desc:'A soft, heavyweight long sleeve tee with the crab across the chest — the layer that goes from dock to dinner.'},
+    {id:'heavy-tee', name:'Crabby Larry Unisex Heavy T-Shirts', category:'apparel', price:36, icon:'ic-shirt', colors:null, sizes:['S','M','L','XL','XXL'], rating:4.9, reviews:63,
+      desc:'A heavyweight cotton tee with real substance to it — won’t go see-through after one wash.'},
+    {id:'vneck', name:'Crabby Larry Blue Ring Ladies V-neck Only', category:'apparel', price:33, icon:'ic-shirt', colors:['blueringblue'], sizes:['S','M','L','XL','XXL'], rating:4.9, reviews:17,
+      desc:'A relaxed ladies’ v-neck in Blue Ring, with a smaller embroidered crab at the chest.'},
+    {id:'og-crab-tee', name:'Red, White & Blue Crab T-shirts — The OG', category:'apparel', price:33, icon:'ic-shirt', colors:['rwb'], sizes:['S','M','L','XL','XXL'], featured:true, tag:'Original', rating:5.0, reviews:81,
+      desc:'The first Crabby Larry tee ever printed, and still the one people ask for by name.'},
+    {id:'sweatpants', name:'Crabby Larry Sweatpants', category:'apparel', price:55, icon:'ic-sweatpants', colors:null, sizes:['S','M','L','XL','XXL'], rating:4.8, reviews:19,
+      desc:'Fleece-lined sweatpants with a small embroidered crab at the hip — built for boat rides, not the gym.'},
+    {id:'pullover-hoodie', name:'Crabby Larry Pullover Hoodie', category:'outerwear', price:65, icon:'ic-hoodie', colors:null, sizes:['S','M','L','XL','XXL'], featured:true, rating:4.9, reviews:47,
+      desc:'A heavyweight pullover hoodie with a kangaroo pocket and the crab across the chest. The one you’ll live in by October.'},
+    {id:'quarter-zip', name:'Crabby Larry Quarter Zip', category:'outerwear', price:62, icon:'ic-jacket', colors:null, sizes:['S','M','L','XL','XXL'], featured:true, tag:'New', rating:4.8, reviews:24,
+      desc:'A brushed-fleece quarter zip with an embroidered crab at the chest — layers clean under a rain shell.'},
+    {id:'cranberry-cropped-hoodie', name:'Crabby Larry Cranberry Cropped Hoodie', category:'outerwear', price:30, icon:'ic-hoodie', colors:['cranberry'], sizes:['S','M','L','XL'], rating:4.7, reviews:15,
+      desc:'A cropped, cozy hoodie in Cranberry with the crab embroidered on the chest.'},
+    {id:'adult-seasonings-sweatshirt', name:'Adult Crabby Larry Seasonings Greetings Sweatshirt', category:'outerwear', price:55, icon:'ic-hoodie', colors:null, sizes:['S','M','L','XL','XXL'], soldOutSizes:['S','M'], tag:'Holiday', rating:4.9, reviews:33,
+      desc:'The holiday-only crewneck — “Seasonings Greetings” embroidered with a crab in a Santa hat. Runs small; Small and Medium are sold out.'},
+    {id:'youth-seasonings-hoodie', name:'Toddler/Youth Crabby Larry Seasonings Greetings Hooded Sweatshirt', category:'outerwear', price:49, icon:'ic-hoodie', colors:null, sizes:['2T-4T','Youth S/M','Youth L/XL'], tag:'Holiday', rating:4.9, reviews:12,
+      desc:'The kid-sized version of the Seasonings Greetings hoodie, sized for toddlers through youth.'},
+    {id:'tote', name:'Crabby Larry Tote', category:'accessories', price:42, icon:'ic-tote', colors:null, sizes:null, featured:true, rating:4.9, reviews:28,
+      desc:'A heavy-canvas tote with the crab printed front and center. Fits a full beach day or a Costco run equally well.'},
+    {id:'notecards', name:'Crabby Larry Note Cards', category:'accessories', price:28, icon:'ic-notecard', colors:null, sizes:null, rating:5.0, reviews:9,
+      desc:'A boxed set of note cards featuring the Crabby Larry crab artwork — for thank-yous with a little Crabitude.'},
+
+    /* ---- Proposed collaboration concept: Crabby Larry embroidery on Stitch Golf's polos ---- */
+    {id:'stitch-solid-pique', name:'Stitch Solid Pique — Crabby Larry Edition', brand:'Stitch Golf', category:'collab', price:88, icon:'ic-shirt', colors:['navy','crimson','lightblue'], sizes:['S','M','L','XL','XXL'], tag:'Concept', featured:true, rating:4.9, reviews:6,
+      desc:'Stitch’s signature Solid Pique — moisture-wicking, antimicrobial, finished with Stitch’s underbuttons — with the Crabby Larry crab custom-embroidered on the left chest. Proposed concept, built on Stitch’s custom-logo program.'},
+    {id:'stitch-legacy-polo', name:'Stitch Legacy Polo — Crabby Larry Edition', brand:'Stitch Golf', category:'collab', price:98, icon:'ic-shirt', colors:['navy','white'], sizes:['S','M','L','XL','XXL'], tag:'Concept', rating:4.8, reviews:4,
+      desc:'A Stitch Legacy Polo customized with an embroidered Crabby Larry crab — proposed as a limited co-branded run.'},
+    {id:'stitch-victory-stripe', name:'Stitch Victory Stripe — Crabby Larry Edition', brand:'Stitch Golf', category:'collab', price:108, icon:'ic-shirt', colors:['navy','crimson'], sizes:['S','M','L','XL','XXL'], tag:'Concept', featured:true, rating:5.0, reviews:3,
+      desc:'Stitch’s Victory Stripe polo with a Crabby Larry crab embroidered at the chest, in place of Stitch’s usual tour logo.'},
+    {id:'stitch-solid-jersey', name:'Stitch Solid Jersey — Crabby Larry Edition', brand:'Stitch Golf', category:'collab', price:98, icon:'ic-shirt', colors:['lightblue','white'], sizes:['S','M','L','XL','XXL'], tag:'Concept', rating:4.7, reviews:2,
+      desc:'Stitch’s breathable Solid Jersey polo, customized with the Crabby Larry crab — built for hot-day rounds.'},
+    {id:'stitch-esses-stripe', name:'Stitch Esses Stripe — Crabby Larry Edition', brand:'Stitch Golf', category:'collab', price:108, icon:'ic-shirt', colors:['navy','seafoam'], sizes:['S','M','L','XL','XXL'], tag:'Concept', rating:4.9, reviews:2,
+      desc:'Stitch’s Esses Stripe polo, re-imagined in Crabby Larry colorways with a custom-embroidered crab.'},
+    {id:'stitch-club-stripe', name:'Stitch Club Stripe — Crabby Larry Edition', brand:'Stitch Golf', category:'collab', price:98, icon:'ic-shirt', colors:['navy','white'], sizes:['S','M','L','XL','XXL'], tag:'Concept', rating:4.8, reviews:1,
+      desc:'Stitch’s Club Stripe polo with the Crabby Larry crab on the chest — a proposed everyday-classic pairing.'}
+  ];
+
+  var FREE_SHIP_THRESHOLD = 75;
+  var STORAGE_KEY = 'crabbylarry_cart_v1';
+
+  var state = {
+    view: 'home',
+    shopFilter: 'all',
+    shopSort: 'featured',
+    cart: loadCart(),
+    quickViewProduct: null,
+    quickViewColor: null,
+    quickViewSize: null
+  };
+
+  function loadCart(){
+    try{
+      var raw = window.localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : [];
+    }catch(e){ return []; }
+  }
+  function saveCart(){
+    try{ window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state.cart)); }catch(e){}
+  }
+
+  function fmt(n){ return '$' + n.toFixed(2); }
+  function byId(id){ return document.getElementById(id); }
+  function productById(id){ for(var i=0;i<PRODUCTS.length;i++){ if(PRODUCTS[i].id===id) return PRODUCTS[i]; } return null; }
+
+  function showToast(msg){
+    var t = byId('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(showToast._t);
+    showToast._t = setTimeout(function(){ t.classList.remove('show'); }, 2200);
+  }
+
+  /* ---------------- Rendering: product tiles ---------------- */
+  function tileStyle(p){
+    var sw = p.colors && p.colors[0] ? SWATCH[p.colors[0]] : null;
+    var bg = 'var(--fairway-tint)', fg = 'var(--fairway-deep)';
+    if(sw){
+      bg = sw.hex + '33';
+      fg = sw.hex === '#F7F4EA' ? '#8A7A4E' : sw.hex;
+    }
+    return 'background:' + bg + ';--tile-bg:' + bg + ';--tile-fg:' + fg + ';';
+  }
+
+  function ratingHtml(p){
+    if(!p.rating) return '';
+    var full = Math.round(p.rating);
+    var stars = '';
+    for(var i=0;i<5;i++){ stars += '<svg'+(i<full?'':' class="empty"')+'><use href="#ic-star"/></svg>'; }
+    return '<div class="rating"><span class="stars">'+stars+'</span><span class="count">'+p.rating.toFixed(1)+' ('+p.reviews+')</span></div>';
+  }
+
+  function productCard(p){
+    var swatches = (p.colors||[]).map(function(c){ return '<span class="swatch-dot" style="background:'+SWATCH[c].hex+'" title="'+SWATCH[c].label+'"></span>'; }).join('');
+    return '' +
+      '<article class="prod-card">' +
+        '<button class="prod-tile" style="'+tileStyle(p)+'" data-quickview="'+p.id+'" aria-label="View '+p.name+'">' +
+          (p.tag ? '<span class="tag">'+p.tag+'</span>' : '') +
+          '<svg><use href="#'+p.icon+'"/></svg>' +
+        '</button>' +
+        '<div class="prod-body">' +
+          (p.brand ? '<span class="brand-tag">'+p.brand+' &times; Crabby Larry</span>' : '') +
+          '<span class="prod-cat">'+CATS[p.category].label+'</span>' +
+          '<button class="prod-name" style="background:none;border:none;padding:0;text-align:left;cursor:pointer;color:inherit" data-quickview="'+p.id+'">'+p.name+'</button>' +
+          ratingHtml(p) +
+          '<span class="prod-price">'+fmt(p.price)+'</span>' +
+          (swatches ? '<div class="swatch-row">'+swatches+'</div>' : '') +
+          '<div class="prod-actions">' +
+            '<button class="btn btn-ghost btn-sm" style="flex:1" data-quickview="'+p.id+'">Quick view</button>' +
+            '<button class="btn btn-accent btn-sm" style="flex:1" data-quickadd="'+p.id+'">Add</button>' +
+          '</div>' +
+        '</div>' +
+      '</article>';
+  }
+
+  function renderFeatured(){
+    var el = byId('featuredGrid');
+    el.innerHTML = PRODUCTS.filter(function(p){ return p.featured; }).map(productCard).join('');
+  }
+
+  function renderShopFilters(){
+    var el = byId('shopFilters');
+    var cats = [{key:'all', label:'All'}].concat(Object.keys(CATS).map(function(k){ return {key:k, label:CATS[k].label}; }));
+    el.innerHTML = cats.map(function(c){
+      return '<button class="chip" data-filter="'+c.key+'" aria-pressed="'+(state.shopFilter===c.key)+'">'+c.label+'</button>';
+    }).join('');
+  }
+
+  function renderShopGrid(){
+    var list = PRODUCTS.slice();
+    if(state.shopFilter !== 'all'){ list = list.filter(function(p){ return p.category === state.shopFilter; }); }
+    if(state.shopSort === 'price-asc') list.sort(function(a,b){ return a.price-b.price; });
+    else if(state.shopSort === 'price-desc') list.sort(function(a,b){ return b.price-a.price; });
+    else if(state.shopSort === 'name') list.sort(function(a,b){ return a.name.localeCompare(b.name); });
+    byId('shopGrid').innerHTML = list.map(productCard).join('');
+    var note = byId('collabNote');
+    if(note) note.hidden = state.shopFilter !== 'collab';
+  }
+
+  /* ---------------- Quick view modal ---------------- */
+  function openQuickView(id){
+    var p = productById(id);
+    if(!p) return;
+    state.quickViewProduct = p;
+    state.quickViewColor = p.colors ? p.colors[0] : null;
+    var soldOut = p.soldOutSizes || [];
+    var firstAvailable = p.sizes ? p.sizes.filter(function(s){ return soldOut.indexOf(s) === -1; })[0] : null;
+    state.quickViewSize = firstAvailable || (p.sizes ? p.sizes[0] : null);
+    renderQuickView();
+    byId('quickView').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeQuickView(){
+    byId('quickView').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function renderQuickView(){
+    var p = state.quickViewProduct; if(!p) return;
+    var colorRow = (p.colors||[]).map(function(c){
+      var sw = SWATCH[c];
+      return '<button class="color-opt" style="background:'+sw.hex+'" data-color="'+c+'" aria-pressed="'+(state.quickViewColor===c)+'" title="'+sw.label+'" aria-label="'+sw.label+'"></button>';
+    }).join('');
+    var soldOut = p.soldOutSizes || [];
+    var sizeRow = p.sizes ? '<div style="margin-top:16px"><div class="opt-label">Size</div><div class="size-row">' +
+      p.sizes.map(function(s){
+        var isSoldOut = soldOut.indexOf(s) !== -1;
+        return '<button class="size-opt" data-size="'+s+'" '+(isSoldOut?'disabled aria-label="'+s+' sold out"':'')+' aria-pressed="'+(state.quickViewSize===s)+'">'+s+(isSoldOut?' &times;':'')+'</button>';
+      }).join('') +
+      '</div></div>' : '';
+    byId('modalGrid').innerHTML =
+      '<div class="modal-art" style="'+tileStyle(p)+'"><svg><use href="#'+p.icon+'"/></svg></div>' +
+      '<div class="modal-info">' +
+        (p.brand ? '<span class="brand-tag">'+p.brand+' &times; Crabby Larry — Concept</span>' : '') +
+        '<span class="prod-cat">'+CATS[p.category].label+'</span>' +
+        '<h3>'+p.name+'</h3>' +
+        ratingHtml(p) +
+        '<span class="price">'+fmt(p.price)+'</span>' +
+        '<p class="desc">'+p.desc+'</p>' +
+        (colorRow ? '<div><div class="opt-label">Color: '+SWATCH[state.quickViewColor].label+'</div><div class="color-row">'+colorRow+'</div></div>' : '') +
+        sizeRow +
+        '<div class="modal-add-row">' +
+          '<div class="qty-stepper" id="qvQty">' +
+            '<button type="button" data-qv-qty="-1" aria-label="Decrease quantity"><svg><use href="#ic-minus"/></svg></button>' +
+            '<span id="qvQtyVal">1</span>' +
+            '<button type="button" data-qv-qty="1" aria-label="Increase quantity"><svg><use href="#ic-plus"/></svg></button>' +
+          '</div>' +
+          '<button class="btn btn-primary" style="flex:1" id="qvAddBtn">Add to cart</button>' +
+        '</div>' +
+      '</div>';
+    byId('qvQtyVal').setAttribute('data-qty','1');
+  }
+
+  /* ---------------- Cart ---------------- */
+  function addToCart(product, color, size, qty){
+    var lineId = product.id + '|' + (color||'') + '|' + (size||'');
+    var existing = state.cart.find(function(l){ return l.lineId === lineId; });
+    if(existing){ existing.qty += qty; }
+    else{
+      state.cart.push({
+        lineId: lineId, id: product.id, name: product.name, category: product.category,
+        price: product.price, icon: product.icon, color: color, size: size, qty: qty, brand: product.brand || null
+      });
+    }
+    saveCart();
+    renderCart();
+    showToast(product.name + ' added to cart');
+  }
+
+  function updateQty(lineId, delta){
+    var line = state.cart.find(function(l){ return l.lineId === lineId; });
+    if(!line) return;
+    line.qty += delta;
+    if(line.qty <= 0){ state.cart = state.cart.filter(function(l){ return l.lineId !== lineId; }); }
+    saveCart(); renderCart(); renderCheckoutSummary();
+  }
+  function removeLine(lineId){
+    state.cart = state.cart.filter(function(l){ return l.lineId !== lineId; });
+    saveCart(); renderCart(); renderCheckoutSummary();
+  }
+  function cartSubtotal(){
+    return state.cart.reduce(function(s,l){ return s + l.price*l.qty; }, 0);
+  }
+  function cartCount(){
+    return state.cart.reduce(function(s,l){ return s + l.qty; }, 0);
+  }
+
+  function cartLineHtml(l){
+    var variant = [l.brand ? (l.brand+' × Crabby Larry') : null, l.color ? SWATCH[l.color].label : null, l.size ? ('Size ' + l.size) : null].filter(Boolean).join(' · ');
+    return '' +
+      '<div class="cart-line">' +
+        '<div class="thumb"><svg><use href="#'+l.icon+'"/></svg></div>' +
+        '<div class="info">' +
+          '<div class="nm">'+l.name+'</div>' +
+          (variant ? '<div class="vr">'+variant+'</div>' : '') +
+          '<div class="qty-stepper">' +
+            '<button type="button" data-cart-qty="'+l.lineId+'" data-delta="-1" aria-label="Decrease quantity"><svg><use href="#ic-minus"/></svg></button>' +
+            '<span>'+l.qty+'</span>' +
+            '<button type="button" data-cart-qty="'+l.lineId+'" data-delta="1" aria-label="Increase quantity"><svg><use href="#ic-plus"/></svg></button>' +
+          '</div>' +
+        '</div>' +
+        '<div class="right">' +
+          '<span class="line-total">'+fmt(l.price*l.qty)+'</span>' +
+          '<button class="rm-btn" data-cart-remove="'+l.lineId+'" aria-label="Remove '+l.name+'"><svg><use href="#ic-trash"/></svg></button>' +
+        '</div>' +
+      '</div>';
+  }
+
+  function renderCart(){
+    var count = cartCount();
+    var badge = byId('cartBadge');
+    if(count > 0){ badge.hidden = false; badge.textContent = count; } else { badge.hidden = true; }
+    byId('drawerCount').textContent = count ? ('('+count+')') : '';
+
+    var body = byId('drawerBody');
+    var foot = byId('drawerFoot');
+    if(state.cart.length === 0){
+      body.innerHTML = '<div class="drawer-empty"><svg viewBox="0 0 220 190" aria-hidden="true"><use href="#larry-mascot"/></svg><h3 style="font-size:1.1rem">Your cart’s all wet</h3><p>Nothing in here yet — go find something Larry-approved.</p><button class="btn btn-primary" data-nav="shop" data-close-cart>Shop the collection</button></div>';
+      foot.hidden = true;
+    } else {
+      body.innerHTML = state.cart.map(cartLineHtml).join('');
+      foot.hidden = false;
+      var subtotal = cartSubtotal();
+      byId('cartSubtotal').textContent = fmt(subtotal);
+      var remaining = FREE_SHIP_THRESHOLD - subtotal;
+      var pct = Math.min(100, Math.round((subtotal/FREE_SHIP_THRESHOLD)*100));
+      byId('shipProgress').innerHTML = (remaining > 0
+        ? 'Add <strong>'+fmt(remaining)+'</strong> more for free shipping'
+        : '<strong>You’ve got free shipping!</strong>') +
+        '<div class="bar"><i style="width:'+pct+'%"></i></div>';
+    }
+  }
+
+  function renderCheckoutSummary(){
+    var subtotal = cartSubtotal();
+    var shipMethod = (document.querySelector('input[name="shipMethod"]:checked')||{}).value || 'standard';
+    var shipping = shipMethod === 'express' ? 14.99 : (subtotal >= FREE_SHIP_THRESHOLD || subtotal === 0 ? 0 : 6.99);
+    var tax = subtotal * 0.07;
+    var total = subtotal + shipping + tax;
+
+    var linesHtml = state.cart.map(function(l){
+      var variant = [l.brand ? (l.brand+' × Crabby Larry') : null, l.color ? SWATCH[l.color].label : null, l.size ? ('Size '+l.size) : null].filter(Boolean).join(' · ');
+      return '<div class="mini-line"><div class="thumb"><svg><use href="#'+l.icon+'"/></svg></div><div><div class="nm">'+l.name+' ×'+l.qty+'</div>'+(variant?'<div class="vr">'+variant+'</div>':'')+'</div><div class="pr">'+fmt(l.price*l.qty)+'</div></div>';
+    }).join('') || '<p style="color:var(--ink-soft); font-size:.88rem">Your cart is empty.</p>';
+
+    var summaryLines = byId('summaryLines');
+    if(summaryLines) summaryLines.innerHTML = linesHtml;
+    var s1 = byId('sumSubtotal'); if(s1) s1.textContent = fmt(subtotal);
+    var s2 = byId('sumShipping'); if(s2) s2.textContent = shipping === 0 ? 'Free' : fmt(shipping);
+    var s3 = byId('sumTax'); if(s3) s3.textContent = fmt(tax);
+    var s4 = byId('sumTotal'); if(s4) s4.textContent = fmt(total);
+    var stdLbl = byId('stdShipLabel'); if(stdLbl) stdLbl.textContent = (subtotal >= FREE_SHIP_THRESHOLD || subtotal === 0) ? 'Free' : '$6.99';
+    var placeBtn = byId('placeOrderBtn'); if(placeBtn) placeBtn.disabled = state.cart.length === 0;
+    return {subtotal:subtotal, shipping:shipping, tax:tax, total:total, linesHtml:linesHtml};
+  }
+
+  /* ---------------- Drawer & modal open/close ---------------- */
+  function openCart(){ byId('cartDrawer').classList.add('open'); byId('scrim').classList.add('open'); document.body.style.overflow='hidden'; }
+  function closeCart(){ byId('cartDrawer').classList.remove('open'); byId('scrim').classList.remove('open'); document.body.style.overflow=''; }
+
+  /* ---------------- View routing ---------------- */
+  function navigate(view, opts){
+    opts = opts || {};
+    state.view = view;
+    document.querySelectorAll('section[data-view]').forEach(function(s){ s.hidden = (s.getAttribute('data-view') !== view); });
+    document.querySelectorAll('[data-link]').forEach(function(a){ a.classList.toggle('active', a.getAttribute('data-link') === view); });
+    if(view === 'shop'){ renderShopFilters(); renderShopGrid(); }
+    if(view === 'checkout'){ renderCheckoutSummary(); }
+    if(location.hash !== '#'+view) history.replaceState(null,'','#'+view);
+    if(!opts.noScroll) window.scrollTo({top:0, behavior:'auto'});
+    var mm = byId('mobileMenu'); mm.classList.remove('open');
+    byId('menuToggle').setAttribute('aria-expanded','false');
+  }
+
+  /* ---------------- Checkout submit ---------------- */
+  function placeOrder(e){
+    e.preventDefault();
+    if(state.cart.length === 0) return;
+    var btn = byId('placeOrderBtn');
+    btn.disabled = true;
+    btn.textContent = 'Processing…';
+    var email = byId('coEmail').value;
+    var summary = renderCheckoutSummary();
+    setTimeout(function(){
+      var orderNo = 'CL-' + Math.floor(1000 + Math.random()*9000);
+      byId('confEmail').textContent = email || 'you';
+      byId('confOrderNo').textContent = 'Order #' + orderNo;
+      var eta = new Date(); eta.setDate(eta.getDate() + 6);
+      byId('confEta').textContent = 'Estimated delivery: ' + eta.toLocaleDateString(undefined,{month:'long', day:'numeric'});
+      byId('confSummaryLines').innerHTML = summary.linesHtml;
+      byId('confTotal').textContent = fmt(summary.total);
+      state.cart = [];
+      saveCart();
+      renderCart();
+      btn.disabled = false;
+      btn.textContent = 'Place order';
+      navigate('confirmation');
+    }, 900);
+  }
+
+  /* ---------------- Event delegation ---------------- */
+  document.addEventListener('click', function(e){
+    var navBtn = e.target.closest('[data-nav]');
+    if(navBtn){ navigate(navBtn.getAttribute('data-nav')); return; }
+
+    var link = e.target.closest('[data-link]');
+    if(link){ e.preventDefault(); navigate(link.getAttribute('data-link')); return; }
+
+    var catCard = e.target.closest('[data-cat]');
+    if(catCard){ state.shopFilter = catCard.getAttribute('data-cat'); navigate('shop'); return; }
+
+    var catLink = e.target.closest('[data-cat-link]');
+    if(catLink){ e.preventDefault(); state.shopFilter = catLink.getAttribute('data-cat-link'); navigate('shop'); return; }
+
+    var filterChip = e.target.closest('[data-filter]');
+    if(filterChip){ state.shopFilter = filterChip.getAttribute('data-filter'); renderShopFilters(); renderShopGrid(); return; }
+
+    var qv = e.target.closest('[data-quickview]');
+    if(qv){ openQuickView(qv.getAttribute('data-quickview')); return; }
+
+    var qadd = e.target.closest('[data-quickadd]');
+    if(qadd){
+      var p = productById(qadd.getAttribute('data-quickadd'));
+      if(p) addToCart(p, p.colors ? p.colors[0] : null, p.sizes ? p.sizes[0] : null, 1);
+      return;
+    }
+
+    if(e.target.closest('#modalCloseBtn') || e.target === byId('quickView')){ closeQuickView(); return; }
+
+    var colorOpt = e.target.closest('[data-color]');
+    if(colorOpt){ state.quickViewColor = colorOpt.getAttribute('data-color'); renderQuickView(); return; }
+    var sizeOpt = e.target.closest('[data-size]');
+    if(sizeOpt){ if(sizeOpt.disabled) return; state.quickViewSize = sizeOpt.getAttribute('data-size'); renderQuickView(); return; }
+
+    var qvQty = e.target.closest('[data-qv-qty]');
+    if(qvQty){
+      var el = byId('qvQtyVal');
+      var cur = parseInt(el.getAttribute('data-qty')||'1',10);
+      var next = Math.max(1, cur + parseInt(qvQty.getAttribute('data-qv-qty'),10));
+      el.textContent = next; el.setAttribute('data-qty', next);
+      return;
+    }
+    if(e.target.closest('#qvAddBtn')){
+      var qp = state.quickViewProduct;
+      var qty = parseInt(byId('qvQtyVal').getAttribute('data-qty')||'1',10);
+      if(qp) addToCart(qp, state.quickViewColor, state.quickViewSize, qty);
+      closeQuickView();
+      return;
+    }
+
+    if(e.target.closest('#cartOpenBtn')){ openCart(); return; }
+    if(e.target.closest('#cartCloseBtn') || e.target === byId('scrim')){ closeCart(); return; }
+    if(e.target.closest('#continueShoppingBtn')){ closeCart(); return; }
+    if(e.target.closest('[data-close-cart]')){ closeCart(); }
+    if(e.target.closest('#checkoutBtn')){ closeCart(); navigate('checkout'); return; }
+
+    var cq = e.target.closest('[data-cart-qty]');
+    if(cq){ updateQty(cq.getAttribute('data-cart-qty'), parseInt(cq.getAttribute('data-delta'),10)); return; }
+    var cr = e.target.closest('[data-cart-remove]');
+    if(cr){ removeLine(cr.getAttribute('data-cart-remove')); return; }
+
+    if(e.target.closest('#menuToggle')){
+      var mm = byId('mobileMenu');
+      var open = mm.classList.toggle('open');
+      byId('menuToggle').setAttribute('aria-expanded', open ? 'true' : 'false');
+      return;
+    }
+  });
+
+  document.addEventListener('change', function(e){
+    if(e.target.id === 'shopSort'){ state.shopSort = e.target.value; renderShopGrid(); }
+    if(e.target.name === 'shipMethod' || e.target.name === 'payMethod'){ renderCheckoutSummary(); }
+    if(e.target.name === 'payMethod'){
+      byId('cardFields').style.display = e.target.value === 'card' ? 'grid' : 'none';
+    }
+  });
+
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){ closeCart(); closeQuickView(); }
+  });
+
+  var newsForm = byId('newsletterForm');
+  if(newsForm) newsForm.addEventListener('submit', function(e){ e.preventDefault(); showToast('Thanks for signing up! (demo)'); newsForm.reset(); });
+
+  var contactForm = byId('contactForm');
+  if(contactForm) contactForm.addEventListener('submit', function(e){ e.preventDefault(); showToast('Message sent — Larry will pinch back soon (demo)'); contactForm.reset(); });
+
+  var checkoutForm = byId('checkoutForm');
+  if(checkoutForm) checkoutForm.addEventListener('submit', placeOrder);
+
+  byId('yearNow').textContent = new Date().getFullYear();
+
+  /* ---------------- Boot ---------------- */
+  renderFeatured();
+  renderCart();
+  var initial = (location.hash||'#home').replace('#','');
+  var valid = ['home','shop','about','contact','checkout','confirmation'];
+  navigate(valid.indexOf(initial) !== -1 ? initial : 'home', {noScroll:true});
+
+  window.addEventListener('hashchange', function(){
+    var v = location.hash.replace('#','');
+    if(valid.indexOf(v) !== -1 && v !== state.view) navigate(v);
+  });
+})();
+</script>
